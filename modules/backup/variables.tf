@@ -204,3 +204,9 @@ variable "add_permissions_on_bucket_for_export" {
    type        = bool
    default     = true
  }
+
+ variable "cloudsql_project_id" {
+  description = "Project ID of CloudSQL instance"
+  type = string
+  default = ""
+ }

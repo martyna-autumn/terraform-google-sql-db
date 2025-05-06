@@ -68,7 +68,7 @@ resource "google_project_iam_member" "sql_backup_serviceaccount_workflow_invoker
 
 data "google_sql_database_instance" "backup_instance" {
   name    = var.sql_instance
-  project = var.project_id
+  project = var.cloudsql_project_id == "" ? var.project_id : var.cloudsql_project_id
 }
 
 resource "google_monitoring_notification_channel" "email" {
