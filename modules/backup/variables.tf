@@ -210,3 +210,15 @@ variable "add_permissions_on_bucket_for_export" {
   type = string
   default = ""
  }
+
+ variable "cloudsql_db_type" {
+  description = "CloudSQL DB Type. If set to empty string, it will be automatically detected"
+  type = string
+  default = ""
+ }
+
+ variable "cloudsql_sa_email" {
+  description = "CloudSQL SA email. If set to empty string, it will be automatically detected"
+  type = string
+  default = ""
+ }
