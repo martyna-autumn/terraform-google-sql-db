@@ -166,7 +166,7 @@ resource "google_workflows_workflow" "sql_export" {
     backupRetentionTime    = var.backup_retention_time
     databases              = jsonencode(var.export_databases)
     gcsBucket              = var.export_uri
-    dbType                 = var.cloudsql_db_type != "" ? var.cloudsql_db_type : split("_", data.google_sql_database_instance[0].backup_instance.database_version)[0]
+    dbType                 = var.cloudsql_db_type != "" ? var.cloudsql_db_type : split("_", data.google_sql_database_instance.backup_instance[0].database_version)[0]
     compressExport         = var.compress_export
     enableConnectorParams  = var.enable_connector_params
     connectorParamsTimeout = var.connector_params_timeout
@@ -198,7 +198,7 @@ resource "google_cloud_scheduler_job" "sql_export" {
 resource "google_storage_bucket_iam_member" "sql_instance_account" {
   count  = var.enable_export_backup && var.add_permissions_on_bucket_for_export ? 1 : 0
   bucket = split("/", var.export_uri)[2] #Get the name of the bucket out of the URI
-  member = var.cloudsql_sa_email != "" ? "serviceAccount:${var.cloudsql_sa_email}" : "serviceAccount:${data.google_sql_database_instance[0].backup_instance.service_account_email_address}"
+  member = var.cloudsql_sa_email != "" ? "serviceAccount:${var.cloudsql_sa_email}" : "serviceAccount:${data.google_sql_database_instance.backup_instance[0].service_account_email_address}"
   role   = "roles/storage.objectAdmin"
 }
 
