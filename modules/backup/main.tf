@@ -161,7 +161,7 @@ resource "google_workflows_workflow" "sql_export" {
   project         = var.project_id
   service_account = local.service_account
   source_contents = templatefile("${path.module}/templates/export.yaml.tftpl", {
-    project                = var.project_id
+    project                = var.cloudsql_project_id == "" ? var.project_id : var.cloudsql_project_id
     instanceName           = var.use_sql_instance_replica_in_exporter ? var.sql_instance_replica : var.sql_instance
     backupRetentionTime    = var.backup_retention_time
     databases              = jsonencode(var.export_databases)
